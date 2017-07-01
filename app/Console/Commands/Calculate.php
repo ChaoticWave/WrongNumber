@@ -37,6 +37,8 @@ class Calculate extends AppCommand
             $_systems = explode(',', $_systems);
         }
 
+        asort($_systems);
+
         foreach ($_systems as $_system) {
             $this->applyCipher($_text, $_system);
         }
@@ -50,8 +52,17 @@ class Calculate extends AppCommand
      */
     protected function applyCipher($text, $system)
     {
-        $_value = CipherManager::make($system)->calculate($text);
+        $_reduced = 0;
+        $_value = CipherManager::make($system)->calculate($text, $_reduced);
 
-        $this->writeln('<info>The value of "' . $text . '" in ' . studly_case($system) . ' gematria is: <comment>' . $_value . '</comment></info>');
+        $this->writeln('<info>The value of "' .
+            $text .
+            '" in ' .
+            studly_case($system) .
+            ' gematria is: <comment>' .
+            $_value .
+            ' (' .
+            $_reduced .
+            ')</comment></info>');
     }
 }

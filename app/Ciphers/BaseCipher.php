@@ -44,16 +44,17 @@ abstract class BaseCipher implements CipherLike
             $name = static::SYSTEM;
         }
 
+        //  Load the cipher
         $this->load($name, $key);
     }
 
     /**
-     * @param string $text
-     * @param array  $key
+     * @param string   $text
+     * @param int|null $reduced The reduced value will be placed here
      *
      * @return int
      */
-    public function calculate($text)
+    public function calculate($text, &$reduced = null)
     {
         if (empty($this->name) || empty($this->key)) {
             throw new \RuntimeException('No cipher key available.');
@@ -63,10 +64,15 @@ abstract class BaseCipher implements CipherLike
 
         for ($_i = 0, $_max = mb_strlen($text); $_i < $_max; $_i++) {
             $_char = mb_strtoupper($text[$_i]);
+
             if (array_key_exists($_char, $this->key)) {
                 $_value += $this->getCharacterValue(mb_strtoupper($_char), $_i);
+            } elseif (is_numeric($_char)) {
+                $_value += (int)$_char;
             }
         }
+
+        $reduced = $this->reduceValue($_value);
 
         return $_value;
     }
@@ -102,6 +108,10 @@ abstract class BaseCipher implements CipherLike
             return false;
         }
 
+        if (null !== ($_defaults = config('ciphers.defaults')) && is_array($_defaults)) {
+            $key = array_merge($_defaults, $key);
+        }
+
         $this->key = $key;
         $this->name = $name;
 
@@ -128,5 +138,28 @@ abstract class BaseCipher implements CipherLike
     public function getKey()
     {
         return $this->key;
+    }
+
+    /**
+     * Given an integer, the value is reduced to it's lowest value.
+     *
+     * @param int $value
+     *
+     * @return int
+     */
+    protected function reduceValue($value)
+    {
+        $_valueString = (string)$value;
+        $_reduction = 0;
+
+        for ($_i = 0, $_max = strlen($_valueString); $_i < $_max; $_i++) {
+            $_reduction += (int)$_valueString[$_i];;
+        }
+
+        while ($_reduction > 9 && $_reduction != 11) {
+            $_reduction = $this->reduceValue($_reduction);
+        }
+
+        return $_reduction;
     }
 }

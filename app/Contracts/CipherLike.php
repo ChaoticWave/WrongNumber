@@ -12,11 +12,12 @@ interface CipherLike
     /**
      * Calculates the gematria of $text using the Cipher key
      *
-     * @param string $text
+     * @param string   $text
+     * @param int|null $reduced
      *
      * @return int
      */
-    public function calculate($text);
+    public function calculate($text, &$reduced = null);
 
     /**
      * Returns the name of the system

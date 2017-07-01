@@ -1,11 +1,11 @@
 <?php namespace ChaoticWave\WrongNumber\Ciphers;
 
-class Pi extends BaseCipher
+class EnglishOrdinal extends BaseCipher
 {
     //******************************************************************************
     //* Constants
     //******************************************************************************
 
     /** @inheritdoc */
-    const SYSTEM = 'pi';
+    const SYSTEM = 'english-ordinal';
 }
