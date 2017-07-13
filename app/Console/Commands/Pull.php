@@ -1,18 +1,18 @@
 <?php namespace ChaoticWave\WrongNumber\Console\Commands;
 
-use ChaoticWave\BlueVelvet\Traits\ConsoleHelper;
 use ChaoticWave\WrongNumber\Ciphers\CipherManager;
+use Vinelab\Rss\Rss;
 
-class Calculate extends AppCommand
+class Pull extends AppCommand
 {
     //******************************************************************************
     //* Members
     //******************************************************************************
 
     /** @inheritdoc */
-    protected $signature = 'wn:calculate {text} {--systems=}';
+    protected $signature = 'wn:pull {--feed=}';
     /** @inheritdoc */
-    protected $description = 'Calculates the gematria for "text"';
+    protected $description = 'Pull an RSS feed';
 
     //******************************************************************************
     //* Methods
@@ -21,20 +21,25 @@ class Calculate extends AppCommand
     /** @inheritdoc */
     public function handle()
     {
-        $_text = $this->argument('text');
-        $_systems = trim(strtolower($this->option('systems')));
-        $_manager = new CipherManager();
+        $_feed = $this->option('feed');
 
-        if (empty($_systems)) {
-            $_systems = $_manager->getSystems(true);
-        } else {
-            $_systems = explode(',', $_systems);
-        }
+        return $this->readFeed($_feed);
+    }
 
-        asort($_systems);
+    protected function readFeed($feed = null)
+    {
+        $_feeds = [$feed] ?: config('feeds', []);
+        $_rss = new Rss();
 
-        foreach ($_systems as $_system) {
-            $this->applyCipher($_text, $_system);
+        foreach ($_feeds as $_name => $_url) {
+            /** @var \Vinelab\Rss\ArticlesCollection $_rssFeed */
+            $_rssFeed = $_rss->feed($_url);
+
+            foreach ($_rssFeed as $_article) {
+                $this->writeln('Article: ' . $_article->title);
+            }
+
+            unset($_name, $_url, $_rssFeed, $_rss);
         }
     }
 

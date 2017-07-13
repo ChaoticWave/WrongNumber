@@ -3,6 +3,7 @@
 namespace ChaoticWave\WrongNumber\Console;
 
 use ChaoticWave\WrongNumber\Console\Commands\Calculate;
+use ChaoticWave\WrongNumber\Console\Commands\Pull;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -15,6 +16,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         Calculate::class,
+        Pull::class,
     ];
 
     /**

@@ -5,5 +5,7 @@
  */
 return [
     //  Google News
-    'google' => 'https://news.google.com/?output=rss',
+    //'google'                => 'https://news.google.com/?output=rss',
+    //'reuters-entertainment' => 'http://feeds.reuters.com/reuters/entertainment',
+    'reuters' => 'http://feeds.reuters.com/news/artsculture',
 ];

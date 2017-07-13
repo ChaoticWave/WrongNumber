@@ -1,6 +1,4 @@
-<?php
-
-namespace ChaoticWave\WrongNumber\;
+<?php namespace ChaoticWave\WrongNumber;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
