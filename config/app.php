@@ -48,7 +48,7 @@ return [
          * Package Service Providers...
          */
         Laravel\Tinker\TinkerServiceProvider::class,
-        Vinelab\Rss\RssServiceProvider::class,
+        Thujohn\Rss\RssServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -89,6 +89,7 @@ return [
         'Request'      => Illuminate\Support\Facades\Request::class,
         'Response'     => Illuminate\Support\Facades\Response::class,
         'Route'        => Illuminate\Support\Facades\Route::class,
+        'RSS'          => Thujohn\Rss\RssFacade::class,
         'Schema'       => Illuminate\Support\Facades\Schema::class,
         'Session'      => Illuminate\Support\Facades\Session::class,
         'Storage'      => Illuminate\Support\Facades\Storage::class,
