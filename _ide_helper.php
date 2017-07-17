@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.4.28 on 2017-07-12.
+ * Generated for Laravel 5.4.28 on 2017-07-17.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -11554,73 +11554,6 @@ namespace Illuminate\Support\Facades {
  
 }
 
-namespace Vinelab\Http\Facades { 
-
-    class Client {
-         
-    }
- 
-}
-
-namespace Vinelab\Rss\Facades { 
-
-    class RSS {
-        
-        /**
-         * Fetch and return an RSS feed.
-         *
-         * @param string $url
-         * @param string $format
-         * @return \Vinelab\Rss\ArticlesCollection 
-         * @static 
-         */ 
-        public static function feed($url, $format = 'xml')
-        {
-            return \Vinelab\Rss\Rss::feed($url, $format);
-        }
-        
-        /**
-         * Fetch the feed from source.
-         *
-         * @param string $url
-         * @return mixed 
-         * @static 
-         */ 
-        public static function fetch($url)
-        {
-            return \Vinelab\Rss\Rss::fetch($url);
-        }
-        
-        /**
-         * Prepares a feed URL to be
-         * requestable.
-         *
-         * @param string $url
-         * @return string 
-         * @static 
-         */ 
-        public static function prepareURL($url)
-        {
-            return \Vinelab\Rss\Rss::prepareURL($url);
-        }
-        
-        /**
-         * Prases the feed according to the format.
-         *
-         * @param mixed $feed
-         * @param string $format
-         * @return \Vinelab\Rss\ArticlesCollection 
-         * @static 
-         */ 
-        public static function parse($response, $format)
-        {
-            return \Vinelab\Rss\Rss::parse($response, $format);
-        }
-         
-    }
- 
-}
-
 
 namespace  { 
 
@@ -13684,10 +13617,6 @@ namespace  {
     class Validator extends \Illuminate\Support\Facades\Validator {}
 
     class View extends \Illuminate\Support\Facades\View {}
-
-    class HttpClient extends \Vinelab\Http\Facades\Client {}
-
-    class RSS extends \Vinelab\Rss\Facades\RSS {}
  
 }
 

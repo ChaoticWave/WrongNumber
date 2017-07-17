@@ -1,6 +1,7 @@
 <?php namespace ChaoticWave\WrongNumber\Console\Commands;
 
 use ChaoticWave\WrongNumber\Ciphers\CipherManager;
+use FeedIo\Factory;
 
 class Pull extends AppCommand
 {
@@ -27,26 +28,22 @@ class Pull extends AppCommand
 
     protected function readFeed($feed = null)
     {
-        $_feeds = [$feed] ?: config('feeds', []);
-        $_rss = \RSS::feed('2.0', 'UTF-8');
+        $_feeds = empty($feed) ? config('feeds', []) : [$feed];
+        $_ioFeed = Factory::create()->getFeedIo();
 
-        // $_rss->channel(array('title' => 'Channel\'s title', 'description' => 'Channel\'s description', 'link' => 'http://www.test.com/'));
-        //
-        //    for ($i = 1; $i <= 5; $i++) {
-        // 	$feed->item(array('title' => 'Item '.$i, 'description|cdata' => 'Description '.$i, 'link' => 'http://www.test.com/article-'.$i));
-        // }
+        foreach ($_feeds as $_id => $_url) {
+            $this->writeln('Reading ' . $_id . ': ' . $_url);
+            $_result = $_ioFeed->readSince($_url, new \DateTime('-30 days'));
 
-        // return Response::make($feed, 200, array('Content-Type' => 'text/xml'));
+            // get title
+            $_feedTitle = $_result->getFeed()->getTitle();
+            $this->writeln('Feed: ' . $_feedTitle);
 
-        foreach ($_feeds as $_name => $_url) {
-            /** @var \Vinelab\Rss\ArticlesCollection $_rssFeed */
-            $_rssFeed = $_rss->feed($_url);
-
-            foreach ($_rssFeed as $_article) {
-                $this->writeln('Article: ' . $_article->title);
+            // iterate through items
+            foreach ($_result->getFeed() as $_item) {
+                $_item->
+                $this->writeln('Title: ' . $_item->getTitle());
             }
-
-            unset($_name, $_url, $_rssFeed, $_rss);
         }
     }
 
